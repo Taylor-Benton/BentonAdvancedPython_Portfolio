@@ -1,5 +1,5 @@
 # BentonAdvancedPython_Portfolio
-This is my portfolio from my advanced python work.
+This is my portfolio from my advanced python work done in my Advanced Python class.
 
 # Advanced Python Final Project
 
@@ -3438,4 +3438,3805 @@ This concludes our work using sequence input output.
 
 # Multiple Sequence Alignments
 Now we will learn how to work with multiple sequence alignments.
+
+Find and Load file to virtual computer.
+https://raw.githubusercontent.com/biopython/biopython/master/Doc/examples/PF05371_seed.sth
+
+Load our data needed for this task.
+```python
+from Bio import AlignIO
+```
+
+
+Load our file to our alignment code.
+```python
+alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
+```
+
+Call to print our alignment.
+```python
+print(alignment)
+```
+
+    Alignment with 7 rows and 52 columns
+    AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRL...SKA COATB_BPIKE/30-81
+    AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKL...SRA Q9T0Q8_BPIKE/1-52
+    DGTSTATSYATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRL...SKA COATB_BPI22/32-83
+    AEGDDP---AKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKL...SKA COATB_BPM13/24-72
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKL...SKA COATB_BPZJ2/1-49
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKL...SKA Q9T0Q9_BPFD/1-49
+    FAADDATSQAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKL...SRA COATB_BPIF1/22-73
+
+
+
+Import this code to have the system read your file.
+```python
+alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
+```
+
+We can see how long our alignment is.
+```python
+print("Alignment length %i" % alignment.get_alignment_length())
+```
+
+    Alignment length 52
+
+
+We can call to print out our strings.
+```python
+for record in alignment:
+    print("%s - %s" % (record.seq, record.id))
+```
+
+    AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRLFKKFSSKA - COATB_BPIKE/30-81
+    AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKLFKKFVSRA - Q9T0Q8_BPIKE/1-52
+    DGTSTATSYATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRLFKKFSSKA - COATB_BPI22/32-83
+    AEGDDP---AKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA - COATB_BPM13/24-72
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFASKA - COATB_BPZJ2/1-49
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA - Q9T0Q9_BPFD/1-49
+    FAADDATSQAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA - COATB_BPIF1/22-73
+
+
+
+We can see the references that come with the strings.
+```python
+for record in alignment:
+    if record.dbxrefs:
+        print("%s %s" % (record.id, record.dbxrefs))
+```
+
+    COATB_BPIKE/30-81 ['PDB; 1ifl ; 1-52;']
+    COATB_BPM13/24-72 ['PDB; 2cpb ; 1-49;', 'PDB; 2cps ; 1-49;']
+    Q9T0Q9_BPFD/1-49 ['PDB; 1nh4 A; 1-49;']
+    COATB_BPIF1/22-73 ['PDB; 1ifk ; 1-50;']
+
+
+We can also look at all the annotations for all the alignments.
+```python
+for record in alignment:
+    print(record)
+```
+
+    ID: COATB_BPIKE/30-81
+    Name: COATB_BPIKE
+    Description: COATB_BPIKE/30-81
+    Database cross-references: PDB; 1ifl ; 1-52;
+    Number of features: 0
+    /accession=P03620.1
+    /start=30
+    /end=81
+    Per letter annotation for: secondary_structure
+    Seq('AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRLFKKFSSKA')
+    ID: Q9T0Q8_BPIKE/1-52
+    Name: Q9T0Q8_BPIKE
+    Description: Q9T0Q8_BPIKE/1-52
+    Number of features: 0
+    /accession=Q9T0Q8.1
+    /start=1
+    /end=52
+    Seq('AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKLFKKFVSRA')
+    ID: COATB_BPI22/32-83
+    Name: COATB_BPI22
+    Description: COATB_BPI22/32-83
+    Number of features: 0
+    /accession=P15416.1
+    /start=32
+    /end=83
+    Seq('DGTSTATSYATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRLFKKFSSKA')
+    ID: COATB_BPM13/24-72
+    Name: COATB_BPM13
+    Description: COATB_BPM13/24-72
+    Database cross-references: PDB; 2cpb ; 1-49;, PDB; 2cps ; 1-49;
+    Number of features: 0
+    /accession=P69541.1
+    /start=24
+    /end=72
+    Per letter annotation for: secondary_structure
+    Seq('AEGDDP---AKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA')
+    ID: COATB_BPZJ2/1-49
+    Name: COATB_BPZJ2
+    Description: COATB_BPZJ2/1-49
+    Number of features: 0
+    /accession=P03618.1
+    /start=1
+    /end=49
+    Seq('AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFASKA')
+    ID: Q9T0Q9_BPFD/1-49
+    Name: Q9T0Q9_BPFD
+    Description: Q9T0Q9_BPFD/1-49
+    Database cross-references: PDB; 1nh4 A; 1-49;
+    Number of features: 0
+    /accession=Q9T0Q9.1
+    /start=1
+    /end=49
+    Per letter annotation for: secondary_structure
+    Seq('AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA')
+    ID: COATB_BPIF1/22-73
+    Name: COATB_BPIF1
+    Description: COATB_BPIF1/22-73
+    Database cross-references: PDB; 1ifk ; 1-50;
+    Number of features: 0
+    /accession=P03619.2
+    /start=22
+    /end=73
+    Per letter annotation for: secondary_structure
+    Seq('FAADDATSQAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA')
+
+
+
+Lets look at the help alignment file for all the codes we can use.
+```python
+#help(AlignIO)
+```
+
+We can write a file.
+```python
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.Align import MultipleSeqAlignment
+```
+
+
+Load our MultipleSeqAlignments to our alignment codes. This builds one big file of multiple alignments.
+```python
+align1 = MultipleSeqAlignment(
+    [
+        SeqRecord(Seq("ACTGCTAGCTAG"), id="Alpha"),
+        SeqRecord(Seq("ACT-CTAGCTAG"), id="Beta"),
+        SeqRecord(Seq("ACTGCTAGDTAG"), id="Gamma"),
+    ])
+align2 = MultipleSeqAlignment(
+    [ 
+        SeqRecord(Seq("GTCAGC-AG"), id="Delta"),
+        SeqRecord(Seq("GACAGCTAG"), id="Epsilon"),
+        SeqRecord(Seq("GTCAGCTAG"), id="Zeta"),
+    ])
+align3 = MultipleSeqAlignment(
+    [
+        SeqRecord(Seq("ACTAGTACAGCTG"), id="Eta"),
+        SeqRecord(Seq("ACTAGTACAGCT-"), id="Theta"),
+        SeqRecord(Seq("-CTACTACAGGTG"), id="Iota"),
+    ])
+```
+
+
+We can now load them all together.
+```python
+my_alignments = [align1, align2, align3]
+```
+
+
+Now we can call to print out our previous input.
+```python
+my_alignments
+```
+
+
+
+
+    [<<class 'Bio.Align.MultipleSeqAlignment'> instance (3 records of length 12) at 7f45fa6e4050>,
+     <<class 'Bio.Align.MultipleSeqAlignment'> instance (3 records of length 9) at 7f45fa6e4a90>,
+     <<class 'Bio.Align.MultipleSeqAlignment'> instance (3 records of length 13) at 7f45fa6e4510>]
+
+
+
+
+```python
+print(my_alignments)
+```
+
+    [<<class 'Bio.Align.MultipleSeqAlignment'> instance (3 records of length 12) at 7f45fa6e4050>, <<class 'Bio.Align.MultipleSeqAlignment'> instance (3 records of length 9) at 7f45fa6e4a90>, <<class 'Bio.Align.MultipleSeqAlignment'> instance (3 records of length 13) at 7f45fa6e4510>]
+
+
+
+Now we're going to write our alignments into a file.
+```python
+from Bio import AlignIO
+AlignIO.write(my_alignments, "my_example.phy", "phylip")
+```
+
+
+
+
+    3
+
+
+
+
+Now lets read in multiple alignment files.
+```python
+alignments = AlignIO.parse("my_example.phy", "phylip")
+```
+
+We can load our alignment back in.
+```python
+for alignment in alignments:
+    print(alignment)
+    print()
+```
+
+    Alignment with 3 rows and 12 columns
+    ACTGCTAGCTAG Alpha
+    ACT-CTAGCTAG Beta
+    ACTGCTAGDTAG Gamma
+    
+    Alignment with 3 rows and 9 columns
+    GTCAGC-AG Delta
+    GACAGCTAG Epsilon
+    GTCAGCTAG Zeta
+    
+    Alignment with 3 rows and 13 columns
+    ACTAGTACAGCTG Eta
+    ACTAGTACAGCT- Theta
+    -CTACTACAGGTG Iota
+    
+
+
+
+If you want to read in something independently, first you have to list it.
+```python
+alignments = list(AlignIO.parse("my_example.phy", "phylip"))
+```
+
+
+```python
+last_align = alignments[-1]
+```
+
+
+We can print the last multiple sequence alignment of the data for the third record in each alignment.
+```python
+print(last_align)
+```
+
+    Alignment with 3 rows and 13 columns
+    ACTAGTACAGCTG Eta
+    ACTAGTACAGCT- Theta
+    -CTACTACAGGTG Iota
+
+
+
+We can also print the first alignment sequence alone.
+```python
+first_align = alignments[0]
+```
+
+
+```python
+print(first_align)
+```
+
+    Alignment with 3 rows and 12 columns
+    ACTGCTAGCTAG Alpha
+    ACT-CTAGCTAG Beta
+    ACTGCTAGDTAG Gamma
+
+
+
+```python
+from Bio import AlignIO
+```
+
+
+Build a clustal file from the previous files used.
+```python
+count = AlignIO.convert("PF05371_seed.sth", "stockholm", "PF05371_seed.aln", "clustal")
+```
+
+
+We can call to print out our converted alignments.
+```python
+print("Converted %i alignments" % count)
+```
+
+    Converted 1 alignments
+
+
+
+We can do this another way as well.
+```python
+count = AlignIO.write(alignments, "PF05371_seed.aln", "clustal")
+```
+
+
+```python
+print("Converted %i alignments" % count)
+```
+
+    Converted 3 alignments
+
+
+We can also make a phylip format.
+```python
+AlignIO.convert("PF05371_seed.sth", "stockholm", "PF05731_seed.phy", "phylip")
+```
+
+
+
+
+    1
+
+
+
+
+We can also save the data as a relaxed phylip file.
+```python
+AlignIO.convert("PF05371_seed.sth", "stockholm", "PF05371_seed.phy", "phylip-relaxed")
+```
+
+
+
+
+    1
+
+
+
+
+We can also munipulate the names of the files.
+```python
+alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
+name_mapping = {}
+for i, record in enumerate(alignment):
+    name_mapping[i] = record.id
+    record.id = "seq%i" % i
+```
+
+
+Now we can print and see how we've numbered our elements.
+```python
+print(name_mapping)
+```
+
+    {0: 'COATB_BPIKE/30-81', 1: 'Q9T0Q8_BPIKE/1-52', 2: 'COATB_BPI22/32-83', 3: 'COATB_BPM13/24-72', 4: 'COATB_BPZJ2/1-49', 5: 'Q9T0Q9_BPFD/1-49', 6: 'COATB_BPIF1/22-73'}
+
+
+Now we can add our sequence numbers to the file.
+```python
+AlignIO.write([alignment], "PF05371_seed.phy", "phylip")
+```
+
+
+
+
+    1
+
+
+
+We can also do slicing in the alignments.
+```python
+alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
+```
+
+
+We can see how many rows are in our alignment.
+```python
+print("Number of rows: %i" % len(alignment))
+```
+
+    Number of rows: 7
+
+
+
+We can print out our saved list of alignments.
+```python
+for record in alignment:
+    print("%s - %s" % (record.seq, record.id))
+```
+
+    AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRLFKKFSSKA - COATB_BPIKE/30-81
+    AEPNAATNYATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKLFKKFVSRA - Q9T0Q8_BPIKE/1-52
+    DGTSTATSYATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRLFKKFSSKA - COATB_BPI22/32-83
+    AEGDDP---AKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA - COATB_BPM13/24-72
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFASKA - COATB_BPZJ2/1-49
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA - Q9T0Q9_BPFD/1-49
+    FAADDATSQAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA - COATB_BPIF1/22-73
+
+
+
+We can print out specific rows in our list.
+```python
+print(alignment[3:7])
+```
+
+    Alignment with 4 rows and 52 columns
+    AEGDDP---AKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKL...SKA COATB_BPM13/24-72
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKL...SKA COATB_BPZJ2/1-49
+    AEGDDP---AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKL...SKA Q9T0Q9_BPFD/1-49
+    FAADDATSQAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKL...SRA COATB_BPIF1/22-73
+
+
+
+We can also code for a specific character in the row and column.
+```python
+print(alignment[2, 6])
+```
+
+    T
+
+
+Another way to do the previous method.
+```python
+print(alignment[2]. seq[6])
+```
+
+    T
+
+
+You can see all the different characters in the position picked.
+```python
+print(alignment[:, 6])
+```
+
+    TTT---T
+
+
+
+You can also select a range.
+```python
+print(alignment[3:6, :6])
+```
+
+    Alignment with 3 rows and 6 columns
+    AEGDDP COATB_BPM13/24-72
+    AEGDDP COATB_BPZJ2/1-49
+    AEGDDP Q9T0Q9_BPFD/1-49
+
+
+
+Whenever you read the first index, this means to take all the alignments and pick everything through 6.
+```python
+print(alignment[:, :6])
+```
+
+    Alignment with 7 rows and 6 columns
+    AEPNAA COATB_BPIKE/30-81
+    AEPNAA Q9T0Q8_BPIKE/1-52
+    DGTSTA COATB_BPI22/32-83
+    AEGDDP COATB_BPM13/24-72
+    AEGDDP COATB_BPZJ2/1-49
+    AEGDDP Q9T0Q9_BPFD/1-49
+    FAADDA COATB_BPIF1/22-73
+
+
+This is a good way to remove a section of the alignment.
+```python
+print(alignment[:, 6:9])
+```
+
+    Alignment with 7 rows and 3 columns
+    TNY COATB_BPIKE/30-81
+    TNY Q9T0Q8_BPIKE/1-52
+    TSY COATB_BPI22/32-83
+    --- COATB_BPM13/24-72
+    --- COATB_BPZJ2/1-49
+    --- Q9T0Q9_BPFD/1-49
+    TSQ COATB_BPIF1/22-73
+
+
+If we want to get everything after the ninth column.
+```python
+print(alignment[:, 9:])
+```
+
+    Alignment with 7 rows and 43 columns
+    ATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRLFKKFSSKA COATB_BPIKE/30-81
+    ATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKLFKKFVSRA Q9T0Q8_BPIKE/1-52
+    ATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRLFKKFSSKA COATB_BPI22/32-83
+    AKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA COATB_BPM13/24-72
+    AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFASKA COATB_BPZJ2/1-49
+    AKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA Q9T0Q9_BPFD/1-49
+    AKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA COATB_BPIF1/22-73
+
+
+
+You can also remove blocks of columns.
+```python
+edited = alignment[:, :6] + alignment[:, 9:]
+```
+
+
+```python
+print(edited)
+```
+
+    Alignment with 7 rows and 49 columns
+    AEPNAAATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRLFKKFSSKA COATB_BPIKE/30-81
+    AEPNAAATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKLFKKFVSRA Q9T0Q8_BPIKE/1-52
+    DGTSTAATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRLFKKFSSKA COATB_BPI22/32-83
+    AEGDDPAKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA COATB_BPM13/24-72
+    AEGDDPAKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFASKA COATB_BPZJ2/1-49
+    AEGDDPAKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA Q9T0Q9_BPFD/1-49
+    FAADDAAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA COATB_BPIF1/22-73
+
+
+We can sort based on the name of the id.
+```python
+edited.sort()
+```
+
+
+```python
+print(edited)
+```
+
+    Alignment with 7 rows and 49 columns
+    DGTSTAATEAMNSLKTQATDLIDQTWPVVTSVAVAGLAIRLFKKFSSKA COATB_BPI22/32-83
+    FAADDAAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA COATB_BPIF1/22-73
+    AEPNAAATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIRLFKKFSSKA COATB_BPIKE/30-81
+    AEGDDPAKAAFNSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA COATB_BPM13/24-72
+    AEGDDPAKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFASKA COATB_BPZJ2/1-49
+    AEPNAAATEAMDSLKTQAIDLISQTWPVVTTVVVAGLVIKLFKKFVSRA Q9T0Q8_BPIKE/1-52
+    AEGDDPAKAAFDSLQASATEYIGYAWAMVVVIVGATIGIKLFKKFTSKA Q9T0Q9_BPFD/1-49
+
+
+
+```python
+from Bio.Seq import Seq
+```
+
+
+```python
+from Bio.SeqRecord import SeqRecord
+```
+
+
+```python
+from Bio.Align import MultipleSeqAlignment
+```
+
+
+Load our multiple alignment sequence.
+```python
+alignment = MultipleSeqAlignment(
+    [
+        SeqRecord(Seq("ACTCCTA"), id="seq1"),
+        SeqRecord(Seq("AAT-CTA"), id="seq2"),
+        SeqRecord(Seq("CCTACT-"), id="seq3"),
+        SeqRecord(Seq("TCTCCTC"), id="seq4"),
+    ])
+```
+
+
+```python
+print(alignment)
+```
+
+    Alignment with 4 rows and 7 columns
+    ACTCCTA seq1
+    AAT-CTA seq2
+    CCTACT- seq3
+    TCTCCTC seq4
+
+
+
+We can create substitutions by taking all pairs or rows in the alignment and aligning it to each other.
+```python
+substitutions = alignment.substitutions
+```
+
+
+```python
+print(substitutions)
+```
+
+        A    C    T
+    A 2.0  4.5  1.0
+    C 4.5 10.0  0.5
+    T 1.0  0.5 12.0
+    
+
+
+We can add a forth substitution letter.
+```python
+m = substitutions.select("ATCG")
+```
+
+
+```python
+print(m)
+```
+
+        A    T    C   G
+    A 2.0  1.0  4.5 0.0
+    T 1.0 12.0  0.5 0.0
+    C 4.5  0.5 10.0 0.0
+    G 0.0  0.0  0.0 0.0
+    
+
+
+You can change the order of te letters in the previous code.
+```python
+m = substitutions.select("ACTG")
+```
+
+
+```python
+print(m)
+```
+
+        A    C    T   G
+    A 2.0  4.5  1.0 0.0
+    C 4.5 10.0  0.5 0.0
+    T 1.0  0.5 12.0 0.0
+    G 0.0  0.0  0.0 0.0
+    
+
+
+
+ Load our next Task.
+```python
+import Bio.Align.Applications
+```
+
+
+Can view loading alignments for applications.
+```python
+dir(Bio.Align.Applications)
+```
+
+
+
+
+    ['ClustalOmegaCommandline',
+     'ClustalwCommandline',
+     'DialignCommandline',
+     'MSAProbsCommandline',
+     'MafftCommandline',
+     'MuscleCommandline',
+     'PrankCommandline',
+     'ProbconsCommandline',
+     'TCoffeeCommandline',
+     '_ClustalOmega',
+     '_Clustalw',
+     '_Dialign',
+     '_MSAProbs',
+     '_Mafft',
+     '_Muscle',
+     '_Prank',
+     '_Probcons',
+     '_TCoffee',
+     '__all__',
+     '__builtins__',
+     '__cached__',
+     '__doc__',
+     '__file__',
+     '__loader__',
+     '__name__',
+     '__package__',
+     '__path__',
+     '__spec__']
+
+
+
+
+```python
+from Bio.Align.Applications import ClustalwCommandline
+```
+
+
+We can view the help file.
+```python
+#help(ClustalwCommandline)
+```
+
+
+Upload Opuntia file
+https://raw.githubusercontent.com/biopython/biopython/master/Doc/examples/opuntia.aln
+
+```python
+from Bio import AlignIO
+```
+
+
+Make our file into a clustal file.
+```python
+align = AlignIO.read("opuntia.aln", "clustal")
+```
+
+
+```python
+print(align)
+```
+
+    Alignment with 7 rows and 906 columns
+    TATACATTAAAGAAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273285|gb|AF191659.1|AF191
+    TATACATTAAAGAAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273284|gb|AF191658.1|AF191
+    TATACATTAAAGAAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273287|gb|AF191661.1|AF191
+    TATACATAAAAGAAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273286|gb|AF191660.1|AF191
+    TATACATTAAAGGAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273290|gb|AF191664.1|AF191
+    TATACATTAAAGGAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273289|gb|AF191663.1|AF191
+    TATACATTAAAGGAGGGGGATGCGGATAAATGGAAAGGCGAAAG...AGA gi|6273291|gb|AF191665.1|AF191
+
+
+
+We can also make a phylo
+```python
+from Bio import Phylo
+```
+
+
+Import the optunia.dnd file
+https://raw.githubusercontent.com/biopython/biopython/master/Doc/exaamples/optunia.dnd
+
+
+```python
+tree = Phylo.read("opuntia.dnd", "newick")
+```
+
+
+We can make a tree phylo which shows you distances.
+```python
+Phylo.draw_ascii(tree)
+```
+
+                                 _______________ gi|6273291|gb|AF191665.1|AF191665
+      __________________________|
+     |                          |   ______ gi|6273290|gb|AF191664.1|AF191664
+     |                          |__|
+     |                             |_____ gi|6273289|gb|AF191663.1|AF191663
+     |
+    _|_________________ gi|6273287|gb|AF191661.1|AF191661
+     |
+     |__________ gi|6273286|gb|AF191660.1|AF191660
+     |
+     |    __ gi|6273285|gb|AF191659.1|AF191659
+     |___|
+         | gi|6273284|gb|AF191658.1|AF191658
+    
+
+
+
+```python
+
+```
+## Pairwise Alignment
+
+```python
+from Bio import Align
+```
+
+We will begin our Pairwise Alignment now.
+```python
+aligner = Align.PairwiseAligner()
+```
+
+
+```python
+aligner = Align.PairwiseAligner(match_score = 1.0)
+```
+
+Our target for what we are aligning to.
+```python
+target = "GAACT"
+```
+
+
+Our small sequence.
+```python
+query = "GAT"
+```
+
+We can score our alignments.
+```python
+score = aligner.score(target, query)
+```
+
+
+We can call for our score.
+```python
+score
+```
+
+
+
+
+    3.0
+
+
+
+
+```python
+alignments = aligner.align(target, query)
+```
+
+
+We can code in to view our alignments.
+```python
+for alignment in alignments:
+    print(alignment)
+```
+
+    target            0 GAACT 5
+                      0 ||--| 5
+    query             0 GA--T 3
+    
+    target            0 GAACT 5
+                      0 |-|-| 5
+    query             0 G-A-T 3
+    
+
+
+
+Now we will begin trying to change our score total.
+```python
+aligner.mode = "local"
+```
+
+
+Inputing the target area.
+```python
+target = "AGAACTC"
+```
+
+
+```python
+query = "GAACT"
+```
+
+
+Code for our score.
+```python
+score = aligner.score(target, query)
+```
+
+
+Call to see if it has changed.
+```python
+score
+```
+
+
+
+
+    5.0
+
+
+
+
+```python
+alignment = aligner.align(target, query)
+```
+
+
+We have a score of 5 now, so it ignores the first sequence and moves on to the coded scores.
+```python
+for alignment in alignments:
+    print(alignment)
+```
+
+    target            0 GAACT 5
+                      0 ||--| 5
+    query             0 GA--T 3
+    
+    target            0 GAACT 5
+                      0 |-|-| 5
+    query             0 G-A-T 3
+    
+
+
+
+We can view the last code even deeper from this code. You can tailor you scores per your mismatch alignment.
+```python
+print(aligner)
+```
+
+    Pairwise sequence aligner with parameters
+      wildcard: None
+      match_score: 1.000000
+      mismatch_score: 0.000000
+      target_internal_open_gap_score: 0.000000
+      target_internal_extend_gap_score: 0.000000
+      target_left_open_gap_score: 0.000000
+      target_left_extend_gap_score: 0.000000
+      target_right_open_gap_score: 0.000000
+      target_right_extend_gap_score: 0.000000
+      query_internal_open_gap_score: 0.000000
+      query_internal_extend_gap_score: 0.000000
+      query_left_open_gap_score: 0.000000
+      query_left_extend_gap_score: 0.000000
+      query_right_open_gap_score: 0.000000
+      query_right_extend_gap_score: 0.000000
+      mode: local
+    
+
+
+
+We can also look at the algorithm.
+```python
+aligner.algorithm
+```
+
+
+
+
+    'Smith-Waterman'
+
+
+
+
+We can set a significance.
+```python
+aligner.epsilon
+```
+
+
+
+
+    1e-06
+
+
+
+
+```python
+from Bio import Align
+```
+
+
+```python
+aligner = Align.PairwiseAligner()
+```
+
+
+We can put back our original target.
+```python
+target = "GAACT"
+```
+
+
+```python
+query = "GAT"
+```
+
+
+```python
+alignments = aligner.align(target, query)
+```
+
+
+```python
+alignment = alignments[0]
+```
+
+
+We can call our new code to see our changes.
+```python
+alignment
+```
+
+
+
+
+    <Alignment object (2 rows x 5 columns) at 0x7f5c23ff96d0>
+
+
+
+
+```python
+alignment.score
+```
+
+
+
+
+    3.0
+
+
+
+
+We can pull out what the target was for this object.
+```python
+alignment.target
+```
+
+
+
+
+    'GAACT'
+
+
+
+
+We can print out what our query for this object.
+```python
+alignment.query
+```
+
+
+
+
+    'GAT'
+
+
+
+
+We can view our data together.
+```python
+print(alignment)
+```
+
+    target            0 GAACT 5
+                      0 ||--| 5
+    query             0 GA--T 3
+    
+
+
+
+We can get the coordinates.
+```python
+alignment.coordinates
+```
+
+
+
+
+    array([[0, 2, 4, 5],
+           [0, 2, 2, 3]])
+
+
+
+We can view the length of the alignment.
+```python
+len(alignment)
+```
+
+
+
+
+    2
+
+
+
+
+We can get the shape of the alignment.
+```python
+alignment.shape
+```
+
+
+
+
+    (2, 5)
+
+
+
+
+We can set the mode of the alignment to the local.
+```python
+aligner.mode = "local"
+```
+
+
+```python
+local_alignments = aligner.align("TGAACT", "GAC")
+```
+
+
+```python
+local_alignment = local_alignments[0]
+```
+
+
+We can call to view our data.
+```python
+print(local_alignment)
+```
+
+    target            1 GAAC 5
+                      0 ||-| 4
+    query             0 GA-C 3
+    
+
+
+
+We can view our new local alignment shape.
+```python
+local_alignment.shape
+```
+
+
+
+
+    (2, 4)
+
+
+
+
+Now we will look at Global.
+```python
+aligner.mode = "global"
+```
+
+
+```python
+aligner = Align.PairwiseAligner(match = 1.0, mismatch_score = -10)
+```
+
+
+We can now view our changed mismatch score.
+```python
+print(aligner)
+```
+
+    Pairwise sequence aligner with parameters
+      wildcard: None
+      match_score: 1.000000
+      mismatch_score: -10.000000
+      target_internal_open_gap_score: 0.000000
+      target_internal_extend_gap_score: 0.000000
+      target_left_open_gap_score: 0.000000
+      target_left_extend_gap_score: 0.000000
+      target_right_open_gap_score: 0.000000
+      target_right_extend_gap_score: 0.000000
+      query_internal_open_gap_score: 0.000000
+      query_internal_extend_gap_score: 0.000000
+      query_left_open_gap_score: 0.000000
+      query_left_extend_gap_score: 0.000000
+      query_right_open_gap_score: 0.000000
+      query_right_extend_gap_score: 0.000000
+      mode: global
+    
+
+
+We can introduce a gap in our alignment.
+```python
+alignments = aligner.align("AAACAAA", "AAAGAAA")
+```
+
+
+We can see the length of the alignment.
+```python
+len(alignments)
+```
+
+
+
+
+    2
+
+
+
+
+We can view our introduced gap now that has been added.
+```python
+print(alignments[0])
+```
+
+    target            0 AAAC-AAA 7
+                      0 |||--||| 8
+    query             0 AAA-GAAA 7
+    
+
+
+
+
+When viewing the score, it would rather put gaps in than creating a mismatch. Above we have 6 positives and 2 blank spaces. 
+
+
+
+Another way of viewing this. It's the same, the "G" and "C" are reversed.
+```python
+print(alignments[1])
+```
+
+    target            0 AAA-CAAA 7
+                      0 |||--||| 8
+    query             0 AAAG-AAA 7
+    
+
+
+
+View our previous local alignment.
+```python
+print(local_alignment)
+```
+
+    target            1 GAAC 5
+                      0 ||-| 4
+    query             0 GA-C 3
+    
+
+
+
+```python
+print(local_alignment)
+```
+
+    target            1 GAAC 5
+                      0 ||-| 4
+    query             0 GA-C 3
+    
+
+
+
+```python
+local_alignment.sort()
+```
+
+
+```python
+print(local_alignment)
+```
+
+    target            0 GA-C 3
+                      0 ||-| 4
+    query             1 GAAC 5
+    
+
+
+
+```python
+from Bio import Align
+```
+
+
+We are about to start working with reverse complements.
+```python
+from Bio.Seq import reverse_complement
+```
+
+
+Set our target.
+```python
+target = "AAACCC"
+```
+
+
+Set our query.
+```python
+query = "AACC"
+```
+
+We can add our alignment mismatch score and our alignment score.
+```python
+aligner = Align.PairwiseAligner(mismatch_score= -1, internal_gap_score = -1)
+```
+
+
+Now we can see our score number.
+```python
+aligner.score(target, query)
+```
+
+
+
+
+    4.0
+
+
+
+
+We can also view the score with the reverse complement.
+```python
+aligner.score(target, reverse_complement(query))
+```
+
+
+
+
+    0.0
+
+
+
+
+```python
+aligner.score(target, reverse_complement(query), strand = "-")
+```
+
+
+
+
+    4.0
+
+
+
+
+```python
+aligner.score(target, query, strand = "-")
+```
+
+
+
+
+    0.0
+
+
+
+
+If you align two positive strand we get a 4. If we align 2 negative strands we get a zero. If we align two negatives, we get a 4.
+
+
+
+Now we can add our target and query code into the alignment house.
+```python
+alignments = aligner.align(target, query)
+```
+
+
+We can get the length of our new alignments added.
+```python
+len(alignments)
+```
+
+
+
+
+    1
+
+
+
+
+```python
+print(alignments[0])
+```
+
+    target            0 AAACCC 6
+                      0 -||||- 6
+    query             0 -AACC- 4
+    
+
+
+
+We can save it to our "bed files". Which is a file thats in the domain.
+```python
+print(alignments[0].format("bed"))
+```
+
+    target	1	5	query	4.0	+	1	5	0	1	4,	0,
+    
+
+
+
+```python
+alignments = aligner.align(target, reverse_complement(query), strand = "-")
+```
+
+
+We see using this code that we get the same thing because it's a double negative.
+```python
+print(alignments[0]. format("bed"))
+```
+
+    target	1	5	query	4.0	-	1	5	0	1	4,	0,
+    
+
+
+
+Let's try this again, but trying to get that negative complement.
+```python
+alignments = aligner.align(target, query, strand = "-")
+```
+
+
+```python
+len(alignments)
+```
+
+
+
+
+    2
+
+
+
+
+```python
+print(alignments[0])
+```
+
+    target            0 AAACCC----  6
+                      0 ---------- 10
+    query             4 ------GGTT  0
+    
+
+
+
+```python
+print(alignments[1])
+```
+
+    target            0 ----AAACCC  6
+                      0 ---------- 10
+    query             4 GGTT------  0
+    
+
+
+
+Now we're about to start building on our alignment scores.
+```python
+aligner.left_gap_score = -0.5
+```
+
+
+```python
+aligner.right_gap_score = -0.2
+```
+
+
+```python
+aligner.score(target, query)
+```
+
+
+
+
+    3.3
+
+
+
+
+```python
+alignments = aligner.align(target, query)
+```
+
+
+View the length of our alignment.
+```python
+len(alignments)
+```
+
+
+
+
+    1
+
+
+
+
+View our only alignment.
+```python
+print(alignments[0])
+```
+
+    target            0 AAACCC 6
+                      0 -||||- 6
+    query             0 -AACC- 4
+    
+
+
+
+Now let's try to look at the reverse complement of our new data.
+```python
+alignments = aligner.align(target, reverse_complement(query), strand = "-")
+```
+
+
+```python
+print(alignments)
+```
+
+    <Bio.Align.PairwiseAlignments object at 0x7f5c23fd7450>
+
+
+
+We can get our score of our new alignment.
+```python
+aligner.score(target, reverse_complement(query), strand = "-")
+```
+
+
+
+
+    3.3
+
+
+
+
+```python
+print(alignments[0])
+```
+
+    target            0 AAACCC 6
+                      0 -||||- 6
+    query             4 -AACC- 0
+    
+
+
+
+This is the positive strand. If you do the reverse compliment to the negative strand then they cancel each other out since it's two negatives.
+```python
+aligner.score(target, query, strand = "+")
+```
+
+
+
+
+    3.3
+
+
+
+This concludes our multiple sequence alignment project.
+
+# Challenge Project
+During our class, we were instructed to complete a challenge project on our own. I did mine on sequencing rose DNA.
+
+First we had to load our DNA sequence.
+```python
+def dna_to_rna(dna_sequence):
+    """Converts DNA sequence to RNA sequence by replacing 'T' with 'U'."""
+    return dna_sequence.upper().replace("T", "U")
+```
+
+
+The gene sequence from the rose.
+```python
+dna_sequence = "ATGGCGTACGAGTGCATGAGCGG"
+```
+
+We need to transcribe the DNA to RNA.
+```python
+rna_sequence = dna_to_rna(dna_sequence)
+
+print(f"Original DNA: {dna_sequence}")
+print(f"Transcribed RNA: {rna_sequence}")
+```
+
+    Original DNA: ATGGCGTACGAGTGCATGAGCGG
+    Transcribed RNA: AUGGCGUACGAGUGCAUGAGCGG
+
+
+
+Now we can look for specific gene sequences.
+```python
+def find_gene(sequence, gene):
+    """Search for a specific gene or sequence within a DNA strand."""
+    index = sequence.find(gene)
+    if index != -1:
+        return f"Gene found at position {index}"
+    else:
+        return "Gene not found"
+```
+
+
+```python
+rose_dna = "AGCTGTAAGGCGTATGGCGGAGTGTAGCGTAA"
+```
+
+Gene we want to find.
+```python
+gene_to_find = "GTAGC"
+
+result = find_gene(rose_dna, gene_to_find)
+print(result)
+```
+
+    Gene found at position 23
+
+
+
+Now we can visualize our DNA Sequence.
+```python
+import matplotlib.pyplot as plt
+
+def plot_base_composition(dna_sequence):
+    """Plot the distribution of A, T, C, G bases in a DNA sequence."""
+    base_counts = {
+        "A": dna_sequence.upper().count("A"),
+        "T": dna_sequence.upper().count("T"),
+        "C": dna_sequence.upper().count("C"),
+        "G": dna_sequence.upper().count("G")
+    }
+    bases = base_counts.keys()
+    counts = base_counts.values()
+
+    plt.bar(bases, counts, color='skyblue')
+    plt.xlabel('Base')
+    plt.ylabel('Count')
+    plt.title('DNA Base Composition')
+    plt.show()
+```
+
+
+```python
+rose_dna = "ATGCATGAGTGTAGCGAAGCGT"
+
+plot_base_composition(rose_dna)
+```
+
+
+![png](output_7_0.png)
+
+
+
+Now lets do a Sequence Alignment
+```python
+from Bio import AlignIO
+```
+
+
+```python
+rose_gene_1 = "ATGCATGAGTGTAGCGG"
+```
+
+
+```python
+rose_gene_2 = "ATGCATGAGTGTAGCAG"
+```
+
+
+```python
+alignments = pairwise2.align.globalxx(rose_gene_1, rose_gene_2)
+```
+
+
+Let's print the best alignment.
+```python
+for alignment in alignments:
+    print(format_alignment(*alignment))
+```
+
+    ATGCATGAGTGTAGCG-G
+    |||||||||||||||  |
+    ATGCATGAGTGTAGC-AG
+      Score=16
+    
+    ATGCATGAGTGTAGCGG
+    |||||||||||||||.|
+    ATGCATGAGTGTAGCAG
+      Score=16
+    
+    ATGCATGAGTGTAGC-GG
+    ||||||||||||||| | 
+    ATGCATGAGTGTAGCAG-
+      Score=16
+    
+
+
+
+Now let's identify our rose gene function.
+```python
+def gene_function_prediction(gene_sequence):
+    """Simulate gene function prediction based on sequence (example)."""
+    if "GTAGC" in gene_sequence:
+        return "Gene associated with anthocyanin biosynthesis (red pigmentation)"
+    else:
+        return "Gene function unknown"
+```
+
+
+```python
+rose_gene = "ATGCGTACGTAGCTAGCTGAC"
+```
+
+
+Lastly, we can predict our gene function.
+```python
+function = gene_function_prediction(rose_gene)
+print(f"Predicted function: {function}")
+```
+
+    Predicted function: Gene associated with anthocyanin biosynthesis (red pigmentation)
+
+
+This concludes my challenge project.
+
+# BLAST
+Now we will start looking at our BLAST project.
+
+```python
+from Bio.Blast import NCBIWWW
+```
+
+
+```python
+NCBIWWW.email = "taylorbenton33@gmail.com"
+```
+
+
+```python
+results_handle = NCBIWWW.qblast("blastn", "nt", "8332116")
+```
+
+
+First we need to download our fasta file for this example of coding.
+https://github.com/biopython/biopython/blob/master/Doc/examples/m_cold.fasta
+
+
+```python
+from Bio import SeqIO
+```
+
+Loading our fasta file.
+```python
+record = SeqIO.read("m_cold.fasta", format = "fasta")
+```
+
+We can view our data.
+```python
+print(record)
+```
+
+    ID: gi|8332116|gb|BE037100.1|BE037100
+    Name: gi|8332116|gb|BE037100.1|BE037100
+    Description: gi|8332116|gb|BE037100.1|BE037100 MP14H09 MP Mesembryanthemum crystallinum cDNA 5' similar to cold acclimation protein, mRNA sequence
+    Number of features: 0
+    Seq('CACTAGTACTCGAGCGTNCTGCACCAATTCGGCACGAGCAAGTGACTACGTTNT...TTC')
+
+
+
+```python
+results_handle = NCBIWWW.qblast("blastn", "nt", record.seq)
+```
+
+
+We can load the data from our results.
+```python
+with open ("my_blast.xml", "w") as out_handle:
+    out_handle.write(results_handle.read())
+results_handle.close()
+```
+
+Loading our data for our blast.
+```python
+from Bio.Blast import NCBIXML
+```
+
+
+```python
+results_handle = open("my_blast.xml")
+```
+
+
+```python
+blast_record = NCBIXML.read(results_handle)
+```
+
+
+Now we can parse through our data. P-VALUE of 0.4 or high in our data.
+```python
+E_VALUE_THRESH = 0.4
+```
+
+We can write a loop for it to go through. Be careful with running a loop because you might have to put delays in your loop if it is too much to run.
+```python
+for alignment in blast_record.alignments:
+    for hsp in alignment.hsps:
+        if hsp.expect < E_VALUE_THRESH:
+            print("****ALIGNMENT****")
+            print("sequence:", alignment.title)
+            print("length:", alignment.length)
+            print("e value:", hsp.expect)
+            print(hsp.query[0:75] + "...")
+            print(hsp.match[0:75] + "...")
+            print(hsp.sbjct[0:75] + "...")
+```
+
+    ****ALIGNMENT****
+    sequence: gi|1219041180|ref|XM_021875076.1| PREDICTED: Chenopodium quinoa cold-regulated 413 plasma membrane protein 2-like (LOC110697660), mRNA
+    length: 1173
+    e value: 5.25852e-117
+    ACAGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTC...
+    || ||||||||| |||| | |||| ||  |||| |||| | |||| ||| | |||| ||| ||| ||||| | ||...
+    ACCGAAAATGGGCAGAGGAGTGAATTATATGGCAATGACACCTGAGCAACTAGCCGCGGCCAATTTGATCAACTC...
+    ****ALIGNMENT****
+    sequence: gi|2514617377|ref|XM_021992092.2| PREDICTED: Spinacia oleracea cold-regulated 413 plasma membrane protein 2-like (LOC110787470), mRNA
+    length: 752
+    e value: 1.41106e-111
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||| |||  |||| | || ||||| |||||||| || ||||| |||| ||| ||| ||||||||||||||...
+    AAAATGGGTAGACGAATGGATTATTTGGCGATGAAAACCGAGCAATTAGCCGCGGCCAATTTGATCGATTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|2518612504|ref|XM_010682658.3| PREDICTED: Beta vulgaris subsp. vulgaris cold-regulated 413 plasma membrane protein 2 (LOC104895996), mRNA
+    length: 621
+    e value: 3.78639e-106
+    TTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATATCAATGAGCTTAAAATGGCAACA...
+    ||||||||||||||||| ||| ||||  |||||||| |||| ||||  ||||| ||||| ||||| || ||    ...
+    TTGGCCATGAAAACTGAGCAAATGGCGTTGGCTAATTTGATAGATTATGATATGAATGAACTTAAGATCGCTTTG...
+    ****ALIGNMENT****
+    sequence: gi|2031543140|ref|XM_041168865.1| PREDICTED: Juglans microcarpa x Juglans regia cold-regulated 413 plasma membrane protein 2-like (LOC121265293), mRNA
+    length: 1020
+    e value: 1.32158e-105
+    AATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATAT...
+    ||||||||| |||  | |  | |||||||||||||||||||    ||||  |||  || ||||||| || |||| ...
+    AATGGGGAG-GAA--GGATAATTTGGCCATGAAAACTGATCC---GGCCACGGCGGATTTGATCGACTCTGATAA...
+    ****ALIGNMENT****
+    sequence: gi|2618480339|ref|XM_048479995.2| PREDICTED: Ziziphus jujuba cold-regulated 413 plasma membrane protein 2 (LOC107424728), mRNA
+    length: 1028
+    e value: 4.61277e-105
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  ||||| |||| |||||||| |   |||  |||| |  ||||  |||| |||...
+    AAAATGGGGAGG---ATGGAGTTTTTGGCTATGAGAACTGATCCA---GCCACGGCTGACTTGATAAATTCTGAT...
+    ****ALIGNMENT****
+    sequence: gi|2082357255|ref|XM_043119049.1| PREDICTED: Carya illinoinensis cold-regulated 413 plasma membrane protein 2-like (LOC122306609), transcript variant X2, mRNA
+    length: 1036
+    e value: 5.6195e-104
+    ATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATATC...
+    |||||||| |||  | | || |||||||||||||||||||    ||||  |||  || ||||||| || ||||||...
+    ATGGGGAG-GAA--GGATTATTTGGCCATGAAAACTGATCC---GGCCACGGCGGATTTGATCGACTCTGATATC...
+    ****ALIGNMENT****
+    sequence: gi|2082357253|ref|XM_043119041.1| PREDICTED: Carya illinoinensis cold-regulated 413 plasma membrane protein 2-like (LOC122306609), transcript variant X1, mRNA
+    length: 1020
+    e value: 5.6195e-104
+    ATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATATC...
+    |||||||| |||  | | || |||||||||||||||||||    ||||  |||  || ||||||| || ||||||...
+    ATGGGGAG-GAA--GGATTATTTGGCCATGAAAACTGATCC---GGCCACGGCGGATTTGATCGACTCTGATATC...
+    ****ALIGNMENT****
+    sequence: gi|1882610310|ref|XM_035691634.1| PREDICTED: Juglans regia cold-regulated 413 plasma membrane protein 2 (LOC108995251), transcript variant X2, mRNA
+    length: 909
+    e value: 6.84595e-103
+    AATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATT---------GGCCGTGGCTAATATGATCGA...
+    ||||||||| |||  | | || |||||||||||||||||||             ||||  |||  || |||||||...
+    AATGGGGAG-GAA--GGATTATTTGGCCATGAAAACTGATCCGGCCACGGCCACGGCCACGGCGGATTTGATCGA...
+    ****ALIGNMENT****
+    sequence: gi|1882610309|ref|XM_018970776.2| PREDICTED: Juglans regia cold-regulated 413 plasma membrane protein 2 (LOC108995251), transcript variant X1, mRNA
+    length: 1025
+    e value: 6.84595e-103
+    AATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATT---------GGCCGTGGCTAATATGATCGA...
+    ||||||||| |||  | | || |||||||||||||||||||             ||||  |||  || |||||||...
+    AATGGGGAG-GAA--GGATTATTTGGCCATGAAAACTGATCCGGCCACGGCCACGGCCACGGCGGATTTGATCGA...
+    ****ALIGNMENT****
+    sequence: gi|1350315638|ref|XM_006425719.2| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X3, mRNA
+    length: 893
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983798|ref|XM_006466623.4| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X3, mRNA
+    length: 1052
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983796|ref|XM_025094967.2| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X1, mRNA
+    length: 980
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1204884098|ref|XM_021445554.1| PREDICTED: Herrania umbratica cold-regulated 413 plasma membrane protein 2-like (LOC110429488), mRNA
+    length: 905
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||   ||| | || ||||| |||||||| ||||   | || |  |   || |||||  ||| ||||...
+    AAATGGGGAGA---ATGGACTATTTGGCTATGAAAACAGATCCTGTAGCAGAAG---ATTTGATCAGTTCTGATA...
+    ****ALIGNMENT****
+    sequence: gi|2395983800|ref|XM_006466626.4| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X5, mRNA
+    length: 913
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315641|ref|XM_024180293.1| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X4, mRNA
+    length: 868
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315636|ref|XM_006425716.2| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X2, mRNA
+    length: 881
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315634|ref|XM_006425717.2| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X1, mRNA
+    length: 952
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983797|ref|XM_006466624.4| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X2, mRNA
+    length: 968
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983799|ref|XM_006466625.3| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X4, mRNA
+    length: 978
+    e value: 5.26316e-98
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||    |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAATGGGGAGAT---TGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1227938481|ref|XM_022049453.1| PREDICTED: Carica papaya cold-regulated 413 plasma membrane protein 2-like (LOC110820077), mRNA
+    length: 1009
+    e value: 2.23795e-96
+    AGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCG...
+    |||||||||||||    ||| | || ||||| ||||| ||||||||   ||||   ||| || | |||  ||| |...
+    AGAAAATGGGGAGG---ATGGAATATTTGGCTATGAAGACTGATCA---GGCCACTGCTGATCTCATCACTTCTG...
+    ****ALIGNMENT****
+    sequence: gi|1063463253|ref|XM_007047033.2| PREDICTED: Theobroma cacao cold-regulated 413 plasma membrane protein 2 (LOC18611025), transcript variant X2, mRNA
+    length: 1071
+    e value: 9.51602e-95
+    TGTGAACAGA-AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGAT...
+    || |||| || |||||||||||   ||| | || ||||| |||||||| ||||   | || |  |   || ||||...
+    TGAGAACTGAGAAATGGGGAGA---ATGGACTATTTGGCTATGAAAACAGATCCTGTAGCAGAAG---ATTTGAT...
+    ****ALIGNMENT****
+    sequence: gi|1063463252|ref|XM_007047032.2| PREDICTED: Theobroma cacao cold-regulated 413 plasma membrane protein 2 (LOC18611025), transcript variant X1, mRNA
+    length: 1065
+    e value: 9.51602e-95
+    TGTGAACAGA-AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGAT...
+    || |||| || |||||||||||   ||| | || ||||| |||||||| ||||   | || |  |   || ||||...
+    TGAGAACTGAGAAATGGGGAGA---ATGGACTATTTGGCTATGAAAACAGATCCTGTAGCAGAAG---ATTTGAT...
+    ****ALIGNMENT****
+    sequence: gi|1269881403|ref|XM_022895603.1| PREDICTED: Durio zibethinus cold-regulated 413 plasma membrane protein 2 (LOC111300020), transcript variant X1, mRNA
+    length: 1072
+    e value: 3.32142e-94
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||   ||| |||| ||||| |||||||||||||   | || |  |  ||| |||||  ||| ||||...
+    AAATGGGGAGA---ATGGAGTATTTGGCTATGAAAACTGATCCTGTAGCTGAAG--AAT-TGATCAGTTCTGATA...
+    ****ALIGNMENT****
+    sequence: gi|1269881405|ref|XM_022895604.1| PREDICTED: Durio zibethinus cold-regulated 413 plasma membrane protein 2 (LOC111300020), transcript variant X2, mRNA
+    length: 1091
+    e value: 3.32142e-94
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||   ||| |||| ||||| |||||||||||||   | || |  |  ||| |||||  ||| ||||...
+    AAATGGGGAGA---ATGGAGTATTTGGCTATGAAAACTGATCCTGTAGCTGAAG--AAT-TGATCAGTTCTGATA...
+    ****ALIGNMENT****
+    sequence: gi|1269881407|ref|XM_022895605.1| PREDICTED: Durio zibethinus cold-regulated 413 plasma membrane protein 2 (LOC111300020), transcript variant X3, mRNA
+    length: 1069
+    e value: 3.32142e-94
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||||   ||| |||| ||||| |||||||||||||   | || |  |  ||| |||||  ||| ||||...
+    AAATGGGGAGA---ATGGAGTATTTGGCTATGAAAACTGATCCTGTAGCTGAAG--AAT-TGATCAGTTCTGATA...
+    ****ALIGNMENT****
+    sequence: gi|2082386143|ref|XM_043113301.1| PREDICTED: Carya illinoinensis cold-regulated 413 plasma membrane protein 2-like (LOC122301958), transcript variant X1, mRNA
+    length: 844
+    e value: 1.15929e-93
+    ATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATATCAATGAGCTTAAA...
+    ||||| |||||||| |||||||||||||    |||  |||   || ||||||  || ||||||||||| || || ...
+    ATGAATTACTTGGCTATGAAAACTGATCC---GGCAATGGAGGATTTGATCGGCTCTGATATCAATGACCTCAAG...
+    ****ALIGNMENT****
+    sequence: gi|2082386146|ref|XM_043113302.1| PREDICTED: Carya illinoinensis cold-regulated 413 plasma membrane protein 2-like (LOC122301958), transcript variant X2, mRNA
+    length: 824
+    e value: 1.15929e-93
+    ATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATATCAATGAGCTTAAA...
+    ||||| |||||||| |||||||||||||    |||  |||   || ||||||  || ||||||||||| || || ...
+    ATGAATTACTTGGCTATGAAAACTGATCC---GGCAATGGAGGATTTGATCGGCTCTGATATCAATGACCTCAAG...
+    ****ALIGNMENT****
+    sequence: gi|1954740698|ref|XM_038867092.1| PREDICTED: Tripterygium wilfordii cold-regulated 413 plasma membrane protein 2 (LOC120014952), mRNA
+    length: 999
+    e value: 4.04632e-93
+    GAACAGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGAT...
+    ||| ||||||||||||||   | | | || ||||| ||||| |||||||    ||  ||||   || |||||   ...
+    GAAAAGAAAATGGGGAGA---ACGGATTATTTGGCGATGAAGACTGATCC---GGTTGTGGACGATTTGATCAGC...
+    ****ALIGNMENT****
+    sequence: gi|1882636119|ref|XM_018974650.2| PREDICTED: Juglans regia cold-regulated 413 plasma membrane protein 2-like (LOC108998174), mRNA
+    length: 1015
+    e value: 4.92942e-92
+    AATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATAT...
+    |||||||||    ||||| || ||||| |||||||||||||    |||  ||| | || ||||||  || |||||...
+    AATGGGGAGG---ATGAATTATTTGGCTATGAAAACTGATCC---GGCAATGGATGATTTGATCGGCTCTGATAT...
+    ****ALIGNMENT****
+    sequence: gi|2526866810|ref|XM_057645500.1| PREDICTED: Actinidia eriantha cold-regulated 413 plasma membrane protein 2-like (LOC130785340), mRNA
+    length: 1152
+    e value: 4.92942e-92
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    ||||||||||||   ||| | || ||||| ||||| || |||| |  |||  || | ||| ||||| |||| || ...
+    AAAATGGGGAGA---ATGGATTATTTGGCGATGAAGACCGATCCAGCGGC--TGCCGAAT-TGATCAATTCGGAC...
+    ****ALIGNMENT****
+    sequence: gi|1187397285|gb|KX009413.1| Santalum album COR413-PM2 mRNA, complete cds
+    length: 837
+    e value: 1.72054e-91
+    AATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATAT...
+    |||||||||    ||| | | ||||||||||||||| ||||    |||||  |   || ||||| ||||||| ||...
+    AATGGGGAGG---ATGGATTTCTTGGCCATGAAAACAGATCCCGCGGCCGCCG---ATTTGATCAATTCCGACAT...
+    ****ALIGNMENT****
+    sequence: gi|2550782781|ref|XM_058372567.1| PREDICTED: Rhododendron vialii cold-regulated 413 plasma membrane protein 2 (LOC131336659), mRNA
+    length: 1110
+    e value: 2.09604e-90
+    GCCGTGGCTAATATGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGT...
+    ||||  ||| | |||||||| || |||||||| ||||| || || ||  | | | | || || |   | || |  ...
+    GCCGATGCTGAAATGATCGACTCGGATATCAACGAGCTGAAGATCGCGGCCAAGCGACTGATTAGCCACGCCACC...
+    ****ALIGNMENT****
+    sequence: gi|2806124758|ref|XM_068481225.1| PREDICTED: Pyrus communis cold-regulated 413 plasma membrane protein 2-like (LOC137741519), mRNA
+    length: 850
+    e value: 7.31591e-90
+    TGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATT...
+    |||| ||||| |||||||| ||||| || || ||| | | ||| ||||||| |||||| |  | ||| |||  ||...
+    TGATAGATTCAGATATCAAAGAGCTCAAGATTGCAGCCAAGAGACTCATCAGTGATGCCACCAAGCTTGGTGGTT...
+    ****ALIGNMENT****
+    sequence: gi|2532162279|ref|XM_058104265.1| PREDICTED: Malania oleifera cold-regulated 413 plasma membrane protein 2-like (LOC131152402), mRNA
+    length: 2364
+    e value: 8.9126e-89
+    GAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGA...
+    ||||||||||||      | |||||||||||||||||||||||| |  ||| |  |   || |||||  ||| ||...
+    GAAAATGGGGAGGTC---GGAGTACTTGGCCATGAAAACTGATCCAGCGGCTGCCG---ATTTGATCAGTTCGGA...
+    ****ALIGNMENT****
+    sequence: gi|2250518185|ref|XM_009343631.3| PREDICTED: Pyrus x bretschneideri cold-regulated 413 plasma membrane protein 2 (LOC103933927), mRNA
+    length: 787
+    e value: 8.9126e-89
+    TGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATT...
+    |||| ||||| |||||||| ||||| || || ||| | | ||| ||||||| |||||| |  | ||| |||  ||...
+    TGATAGATTCAGATATCAAAGAGCTCAAGATTGCAGCCAAGAGACTCATCAGTGATGCCACCAAGCTTGGTGGTT...
+    ****ALIGNMENT****
+    sequence: gi|1350280614|ref|XM_024170292.1| PREDICTED: Morus notabilis cold-regulated 413 plasma membrane protein 2 (LOC21394987), mRNA
+    length: 1020
+    e value: 3.1108e-88
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||||||||| ||       || |||||||||||||| || | |   |||  |||| || ||||  |||| ||||...
+    AAATGGGGAGGGAT------TATTTGGCCATGAAAACGGACCCA---GCCACGGCTGATTTGATAAATTCTGATA...
+    ****ALIGNMENT****
+    sequence: gi|743838297|ref|XM_011027373.1| PREDICTED: Populus euphratica cold-regulated 413 plasma membrane protein 2 (LOC105126500), transcript variant X2, mRNA
+    length: 1132
+    e value: 3.1108e-88
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   |||||| | || |||||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGCTAATTTAATTGATTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|743838293|ref|XM_011027372.1| PREDICTED: Populus euphratica cold-regulated 413 plasma membrane protein 2 (LOC105126500), transcript variant X1, mRNA
+    length: 980
+    e value: 3.1108e-88
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   |||||| | || |||||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGCTAATTTAATTGATTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|1768569081|ref|XM_031406607.1| PREDICTED: Pistacia vera cold-regulated 413 plasma membrane protein 2-like (LOC116120644), mRNA
+    length: 982
+    e value: 3.78974e-87
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATT-GGCCGTGGCTAATATGATCGATTCCGA...
+    |||||||||||    ||| | ||  |||  ||||||||||| ||||  ||     ||| |  ||||  | || ||...
+    AAAATGGGGAGG---ATGGATTATCTGGGAATGAAAACTGA-CAATCAGGTTACTGCTGAGGTGATTAACTCTGA...
+    ****ALIGNMENT****
+    sequence: gi|2396494064|ref|XM_024605027.2| PREDICTED: Populus trichocarpa cold-regulated 413 plasma membrane protein 2 (LOC18101203), transcript variant X2, mRNA
+    length: 1178
+    e value: 1.32275e-86
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   |||||| | || || ||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGCTAATTTAATTGAGTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|2396494060|ref|XM_052454347.1| PREDICTED: Populus trichocarpa cold-regulated 413 plasma membrane protein 2 (LOC18101203), transcript variant X1, mRNA
+    length: 1018
+    e value: 1.32275e-86
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   |||||| | || || ||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGCTAATTTAATTGAGTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|1585724761|ref|XM_028202722.1| PREDICTED: Camellia sinensis cold-regulated 413 plasma membrane protein 2-like (LOC114262355), mRNA
+    length: 910
+    e value: 4.61684e-86
+    AGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCG...
+    |||||||||||||  ||||| |||| ||||| ||||| || |||||    |||    |  |   |||  ||||||...
+    AGAAAATGGGGAGGAAAATGGAGTATTTGGCAATGAAGACCGATCATCCAGCCCCAACCCAATCGATGAATTCCG...
+    ****ALIGNMENT****
+    sequence: gi|2537663858|ref|XM_021815584.2| PREDICTED: Hevea brasiliensis cold-regulated 413 plasma membrane protein 2 (LOC110658100), mRNA
+    length: 945
+    e value: 1.61144e-85
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    ||||||||||    ||| ||||||||   ||||  ||||||||| |  |   |||  || ||||| | || ||| ...
+    AAATGGGGAGG---ATGGAGTACTTGAAAATGAGTACTGATCAAGTACC---GGCCGATTTGATCAAGTCTGATC...
+    ****ALIGNMENT****
+    sequence: gi|1860377401|ref|XM_035077206.1| PREDICTED: Populus alba cold-regulated 413 plasma membrane protein 2-like (LOC118063227), transcript variant X2, mRNA
+    length: 916
+    e value: 1.61144e-85
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   | |||| | || || ||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGGTAATTTAATTGAGTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|2645357626|ref|XM_062094449.1| PREDICTED: Populus nigra cold-regulated 413 plasma membrane protein 2-like (LOC133673573), mRNA
+    length: 1175
+    e value: 1.61144e-85
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   |||||| | || || ||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGCTAATTTAATTGAGTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|1860377399|ref|XM_035077205.1| PREDICTED: Populus alba cold-regulated 413 plasma membrane protein 2-like (LOC118063227), transcript variant X1, mRNA
+    length: 1109
+    e value: 1.61144e-85
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    |||||||||||    ||| |||  |||   ||||| |||||| |    | |   | |||| | || || ||||||...
+    AAAATGGGGAGG---ATGGAGTTTTTGAAGATGAAGACTGATGATGAAGTCAGCGGTAATTTAATTGAGTCCGAT...
+    ****ALIGNMENT****
+    sequence: gi|1162571918|ref|XM_007202530.2| PREDICTED: Prunus persica cold-regulated 413 plasma membrane protein 2 (LOC18770198), transcript variant X1, mRNA
+    length: 811
+    e value: 1.96313e-84
+    TGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATT...
+    ||||  |||| || |||||||| || || || ||| | | ||  |||||||||||||| | || ||| |||   |...
+    TGATAAATTCAGACATCAATGATCTCAAGATTGCAGCCAAGAAACTCATCAATGATGCCACTAAGCTTGGTGGGT...
+    ****ALIGNMENT****
+    sequence: gi|1162571919|ref|XM_020568695.1| PREDICTED: Prunus persica cold-regulated 413 plasma membrane protein 2 (LOC18770198), transcript variant X2, mRNA
+    length: 929
+    e value: 1.96313e-84
+    TGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATT...
+    ||||  |||| || |||||||| || || || ||| | | ||  |||||||||||||| | || ||| |||   |...
+    TGATAAATTCAGACATCAATGATCTCAAGATTGCAGCCAAGAAACTCATCAATGATGCCACTAAGCTTGGTGGGT...
+    ****ALIGNMENT****
+    sequence: gi|2583747300|ref|XM_059787294.1| PREDICTED: Cornus florida cold-regulated 413 plasma membrane protein 2-like (LOC132285128), mRNA
+    length: 1126
+    e value: 1.96313e-84
+    AGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCG...
+    |||||||||||||| |   | |||| ||||| |||||||||||||    ||||   ||  |  ||||| ||||||...
+    AGAAAATGGGGAGAAA---GGAGTATTTGGCTATGAAAACTGATCC---GGCCACAGCCGAATTGATCAATTCCG...
+    ****ALIGNMENT****
+    sequence: gi|1229761331|ref|XM_022277554.1| PREDICTED: Momordica charantia cold-regulated 413 plasma membrane protein 2-like (LOC111005887), mRNA
+    length: 850
+    e value: 6.852e-84
+    ATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATTACGGGT...
+    |||| |||||||| ||||||||||| ||| | | ||||||  |  |  |||| |  | |||||||    | ||  ...
+    ATTCTGATATCAACGAGCTTAAAATTGCAGCCACGAGGCTTCTTGAACATGCCACCAAGCTCGGTGGAAAGGGCC...
+
+
+
+This concludes our BLAST project.
+
+# Open CV
+Now we will begin our Open CV project.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+import cv2
+```
+
+
+Load our image that we selected.
+```python
+img = cv2.imread("rose.jpg")
+```
+
+
+You can ask what kind of image is it.
+```python
+type(img)
+```
+
+
+
+
+    numpy.ndarray
+
+
+
+
+You can load the image well. It will still run, but when you try to find the type it will say that you installed the wrong image.
+```python
+img_wrong = cv2.imread('wrong/path/doesnot/abcdegh.jpg')
+```
+
+
+This is important to check to make sure your image is going to work.
+```python
+type(img_wrong)
+```
+
+
+
+
+    NoneType
+
+
+
+
+You can view your picture using this code. The image might change colors due to the package.
+```python
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4874c9dcd0>
+
+
+
+
+![png](output_6_1.png)
+
+
+
+We can transform the image to be the original image.
+```python
+fix_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+```
+
+
+Now we can view it fixed.
+```python
+plt.imshow(fix_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4874c91850>
+
+
+
+
+![png](output_8_1.png)
+
+
+
+You can also make gray images. We can also see the size of our image and pixels.
+```python
+img_gray = cv2.imread("rose.jpg", cv2.IMREAD_GRAYSCALE)
+img_gray.shape
+```
+
+
+
+
+    (1024, 684)
+
+
+
+
+Viewing our gray image, but there is a problem because it's using matplot package.
+```python
+plt.imshow(img_gray)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f48743d5a50>
+
+
+
+
+![png](output_10_1.png)
+
+
+
+We can fix this by doing the same as above.
+```python
+plt.imshow(img_gray, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4874335d90>
+
+
+
+
+![png](output_11_1.png)
+
+
+
+We can resize our images.
+```python
+fix_img.shape
+```
+
+
+
+
+    (1024, 684, 3)
+
+
+
+
+We can resize our image using this code. You can change it to whatever measurements you want.
+```python
+new_img = cv2.resize(fix_img,(1000,400))
+plt.imshow(new_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f487429e510>
+
+
+
+
+![png](output_13_1.png)
+
+
+
+```python
+new_img.shape
+```
+
+
+
+
+    (400, 1000, 3)
+
+
+
+
+We can also change the size using these codes.
+```python
+w_ratio = 0.5
+h_ratio = 0.5
+
+new_img = cv2.resize(fix_img, (0,0), fix_img, w_ratio, h_ratio)
+```
+
+Notice the scale has changed, it kind of looks like the image originally, but we cut the image size in half.
+```python
+plt.imshow(new_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f48741e9ad0>
+
+
+
+
+![png](output_16_1.png)
+
+
+
+```python
+new_img.shape
+```
+
+
+
+
+    (512, 342, 3)
+
+
+
+
+We can also flip images.
+```python
+flip_img = cv2.flip(fix_img, 0)
+plt.imshow(flip_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f48741ce350>
+
+
+
+
+![png](output_18_1.png)
+
+
+
+We can flip the image backwards as well.
+```python
+flip_img2 = cv2.flip(fix_img, -1)
+plt.imshow(flip_img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4874125910>
+
+
+
+
+![png](output_19_1.png)
+
+
+
+```python
+type(fix_img)
+```
+
+
+
+
+    numpy.ndarray
+
+
+
+
+Test to see if your image is right.
+```python
+cv2.imwrite("rose.jpg", flip_img)
+```
+
+
+
+
+    True
+
+
+## Open CV part 2
+
+Load our Open CV codes back up to get started.
+```python
+import cv2
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+Load whatever image you want, I chose a rose.
+```python
+img = cv2.imread("rose.jpg")
+```
+
+
+```python
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4279ca6310>
+
+
+
+
+![png](output_2_1.png)
+
+
+
+If your color is messed up above, you can input this code to fix it.
+```python
+img1 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+```
+
+Now we can view the new edited picture. My image was already correct, so it was converted blue now.
+```python
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4271999950>
+
+
+
+
+![png](output_4_1.png)
+
+
+
+We can also convert to other image formats.
+```python
+img2 = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+```
+
+We see its more of a psychedlic color scheme.
+```python
+plt.imshow(img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4271a815d0>
+
+
+
+
+![png](output_6_1.png)
+
+
+
+We can edit the image again using more codes.
+```python
+img3 = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)
+```
+
+
+We see the image is more purple now. These are different ways to convert your images to different color types beyond the RGB stuff that is normal. It's good to use these when converting older images.
+```python
+plt.imshow(img3)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4279c7c9d0>
+
+
+
+
+![png](output_8_1.png)
+
+
+Upload another image to work with.
+```python
+img1 = cv2.imread("caution.jpg")
+img2 = cv2.imread("rose.jpg")
+```
+
+
+We can view the new image, but its back to blue. We have to change the color.
+```python
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4279bd4f10>
+
+
+
+
+![png](output_10_1.png)
+
+
+
+```python
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+```
+
+
+We can view our changed images now.
+```python
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4279bce2d0>
+
+
+
+
+![png](output_12_1.png)
+
+
+
+```python
+plt.imshow(img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4279b3d590>
+
+
+
+
+![png](output_13_1.png)
+
+
+
+We need to resize our images.
+```python
+img1 = cv2.resize(img1,(1200,1200))
+img2 = cv2.resize(img2, (1200,1200))
+```
+
+
+```python
+alpha = 0.5
+beta = 0.5
+```
+
+
+ Now we're going to blend the two photos together.
+```python
+blended = cv2.addWeighted(img1, alpha, img2, beta, gamma=0)
+```
+
+
+We can see that the two photos are equally blended. This can be important when doing microscopy.
+```python
+plt.imshow(blended)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f427077ef50>
+
+
+
+
+![png](output_17_1.png)
+
+
+
+The alpha is how transparent it is. We can look at it with different measurements.
+```python
+alpha = 0.8
+beta = 0.2
+
+blended1 = cv2.addWeighted(img1, alpha, img2, beta, 0)
+plt.imshow(blended1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f42706e8590>
+
+
+
+
+![png](output_18_1.png)
+
+
+You can see above that we have more of image 1, and you see image 2 less. You can switch the two.
+```python
+blended1 = cv2.addWeighted(img2, alpha, img1, beta, 0)
+plt.imshow(blended1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f427064d550>
+
+
+
+
+![png](output_19_1.png)
+
+
+
+
+Now we can see the rose image more and less of the caution image.
+
+ Let's try blending using different image sizes.
+```python
+img1 = cv2.imread("caution.jpg")
+img2 = cv2.imread("rose.jpg")
+
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+
+img1 = cv2.resize(img1, (200,200))
+```
+
+
+We can move them around on the X and Y axes. We can also change the size of each image.
+```python
+large_img = img2
+small_img = img1
+
+x_offset = 0
+y_offset = 0
+
+x_end = x_offset + small_img.shape[1]
+y_end = y_offset + small_img.shape[0]
+
+large_img[y_offset:y_end, x_offset:x_end] = small_img
+plt.imshow(large_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f4271747310>
+
+
+
+
+![png](output_22_1.png)
+
+
+
+
+## Open CV part 3
+
+Download our images first from the website. The images are rainbow and crossword.
+https://github.com/worklifesg/Python-forComputer-Vision-with-OpenCV-and-Deep-Learning
+
+Now we can import our files to begin this example.
+```python
+import cv2
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+Code our image under "img".
+```python
+img = cv2.imread('rainbow.jpg')
+```
+
+
+Now we can view our image.
+```python
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f961f826710>
+
+
+
+
+![png](output_3_1.png)
+
+
+
+```python
+img = cv2.imread('rainbow.jpg', 0)
+```
+
+We can now have reduced the color and have made the image gray. We are going to take this image and threshhold it.
+```python
+plt.imshow(img, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f961f7f17d0>
+
+
+
+
+![png](output_5_1.png)
+
+
+Now we will threshhold the image.
+```python
+ret1, thresh1 = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+```
+
+We can see how much is the cutoff value for our pixels.
+```python
+ret1
+```
+
+
+
+
+    127.0
+
+
+
+We can view our threshhold image.
+```python
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f961d65acd0>
+
+
+
+
+![png](output_8_1.png)
+
+
+
+We inverse the limits, so the gray scale is different for this image. Thresh trunc is the adapted threshhold.
+```python
+img2 = cv2.imread('rainbow.jpg', 0)
+ret1, thresh1 = cv2.threshold(img2, 127, 255, cv2.THRESH_TRUNC)
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f961d642b10>
+
+
+
+
+![png](output_9_1.png)
+
+
+Another thing we can do is use Tozero thresh.
+```python
+img3 = cv2.imread('rainbow.jpg', 0)
+ret1, thresh1 = cv2.threshold(img3, 127, 255, cv2.THRESH_TOZERO)
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f961d5a4790>
+
+
+
+
+![png](output_10_1.png)
+
+
+
+We can load our crossword photo now.
+```python
+img_r = cv2.imread('crossword.jpg', 0)
+plt.imshow(img_r, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f961d58c150>
+
+
+
+
+![png](output_11_1.png)
+
+
+We are using this function to display our images.
+```python
+def show_pic(img):
+    fig = plt.figure(figsize = (15,15))
+    ax = fig.add_subplot(111)
+    ax.imshow(img, cmap = 'gray')
+```
+
+
+Function for showing our image.
+```python
+show_pic(img_r)
+```
+
+
+![png](output_13_0.png)
+
+
+Now we can cut out other aspects of the code. The point is to keep all the black and gray text and turn it into white.
+```python
+ret, th1 = cv2.threshold(img_r, 127, 255, cv2.THRESH_BINARY)
+show_pic(th1)
+```
+
+
+![png](output_14_0.png)
+
+
+Lets try changing the threshold to see if our image will get a better picture.
+```python
+ret, th1 = cv2.threshold(img_r, 200, 255, cv2.THRESH_BINARY)
+show_pic(th1)
+```
+
+
+![png](output_15_0.png)
+
+
+Lets try another technique to try and get a better picture.
+```python
+th2 = cv2.adaptiveThreshold(img_r, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+```
+
+
+```python
+show_pic(th2)
+```
+
+
+![png](output_17_0.png)
+
+
+
+We still don't have the image we want. We can blend thresholds to get a better image. We layered the two pictures coded together in order to make the image look better.
+```python
+blended = cv2.addWeighted(src1 = th1, alpha = 0.6,
+                         src2 = th2, beta = 0.4, gamma = 0)
+show_pic(blended)
+```
+
+
+![png](output_18_0.png)
+
+
+
+Let's look at one more example. We have removed the background and played with the pixelation.
+```python
+th3 = cv2.adaptiveThreshold(img_r, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+
+blended = cv2.addWeighted(src1=th1,alpha=0.6,
+                         src2=th3,beta=0.4,gamma=0)
+
+show_pic(blended)
+```
+
+
+![png](output_19_0.png)
+
+
+
+This concludes our Open CV project.
+
+# Aspect Detection
+Now we will learn how to work with aspect detection.
+
+## Corner Detection
+First we need to import our files that will be used for this example.
+```python
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+Next we need to loard our image into the code. For this example we're using a green chess board.
+```python
+flat_chess = cv2.imread('chessboardgreen.svg.png')
+flat_chess = cv2.cvtColor(flat_chess, cv2.COLOR_BGR2RGB)
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c2b049d0>
+
+
+
+
+![png](output_1_1.png)
+
+
+
+Now we are going to turn the chess board gray.
+```python
+gray_flat_chess = cv2.cvtColor(flat_chess, cv2.COLOR_BGR2GRAY)
+plt.imshow(gray_flat_chess, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c13d2590>
+
+
+
+
+![png](output_2_1.png)
+
+
+Now we're going to upload our real chess board image.
+```python
+real_chess = cv2.imread("chessboard.jpeg")
+real_chess = cv2.cvtColor(real_chess, cv2.COLOR_BGR2RGB)
+```
+
+
+Now we can view our image.
+```python
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c02c13d0>
+
+
+
+
+![png](output_4_1.png)
+
+
+
+We can change the color to gray scale for this image as well.
+```python
+gray_real_chess = cv2.cvtColor(real_chess, cv2.COLOR_BGR2GRAY)
+plt.imshow(gray_real_chess, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c02381d0>
+
+
+
+
+![png](output_5_1.png)
+
+
+
+```python
+gray = np.float32(gray_flat_chess)
+dst = cv2.cornerHarris(src = gray, blockSize = 2, ksize = 3, k = 0.4)
+
+dst = cv2.dilate(dst, None)
+```
+
+
+We can detect the corners and make them red.
+```python
+flat_chess[dst>0.01*dst.max()] = [255, 0, 0]
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c0131490>
+
+
+
+
+![png](output_7_1.png)
+
+
+
+Now we're going to try the same method on the real chess board.
+```python
+gray = np.float32(gray_real_chess)
+dst = cv2.cornerHarris(src = gray, blockSize =2, ksize=3, k=0.04)
+dst = cv2.dilate(dst, None)
+
+real_chess[dst>0.01*dst.max()] = [255, 0, 0]
+
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c0115d90>
+
+
+
+
+![png](output_8_1.png)
+
+
+It's looking for the corner areas and highlighting them red.
+
+
+
+Shi-Tomasi Corner Detection
+We are detecting the max peramitors. We are detecting the minimal distance as well.
+```python
+corners = cv2.goodFeaturesToTrack(gray_flat_chess, 64, 0.02, 10)
+```
+
+
+```python
+corners = np.int0(corners)
+
+for i in corners:
+    x,y = i.ravel()
+    cv2.circle(flat_chess, (x,y),3,(255,0,0), -1 )
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c008b610>
+
+
+
+
+![png](output_11_1.png)
+
+
+
+We can see all the corners detected. Its a total of 49 edges detected.
+
+
+Lets see how this works on the real chess board.
+```python
+corners = cv2.goodFeaturesToTrack(gray_real_chess, 100, 0.01, 10)
+corners = np.int0(corners)
+for i in corners:
+    x, y = i.ravel()
+    cv2.circle(real_chess,(x,y), 3, (0,255,0), -1)
+    
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fd7c006cad0>
+
+
+
+
+![png](output_13_1.png)
+
+
+Now we have red and green dots for this method of detection. This is an overlap of the two. 
+
+## Edge Detection
+
+We have to import our package to use for this package.
+
+```python
+import cv2
+```
+
+
+```python
+import numpy as np
+```
+
+
+```python
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+We first need to download our image. You can use any image you want.
+```python
+img = cv2.imread("rose.jpg")
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a18c7410>
+
+
+
+
+![png](output_3_1.png)
+
+
+
+ We're working with thresholds and using the median threshold values.
+```python
+edges = cv2.Canny(image =img, threshold1 = 127, threshold2 = 127)
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a04dc9d0>
+
+
+
+
+![png](output_4_1.png)
+
+
+We can find our median color value using this code.
+```python
+med_value = np.median(img)
+med_value
+```
+
+
+
+
+    73.0
+
+
+
+
+We can change the lower and upper levels of our threshold.
+```python
+lower = int(max(0, 0.7*med_value))
+upper = int(min(255, 1.3*med_value))
+
+edges = cv2.Canny(img, threshold1 = lower, threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a04467d0>
+
+
+
+
+![png](output_6_1.png)
+
+
+
+The image still looks the same, we're trying to change the threshold to make the image better.
+```python
+edges = cv2.Canny(image = img, threshold1 = lower, threshold2 = upper +100)
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a03a8890>
+
+
+
+
+![png](output_7_1.png)
+
+
+
+This image actually looks worse than the one before. We can take away starkness and that sometimes makes the image look better.
+```python
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a0389fd0>
+
+
+
+
+![png](output_8_1.png)
+
+
+This image is actually worse, we can try improving by increasing the kernal size.
+
+```python
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a02f2590>
+
+
+
+
+![png](output_9_1.png)
+
+
+The image above is better, but it still isn't as good as our one before. We can try increasing the upper threshold.
+```python
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper + 50)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a024d410>
+
+
+
+
+![png](output_10_1.png)
+
+
+We can see the rose more in the image, but it still isn't that good. Let's try to add more to the upper.
+
+```python
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper +100)
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a01aa990>
+
+
+
+
+![png](output_11_1.png)
+
+
+The image above actually is the worse one we've done yet, let's try another way by chnaging the ksize and the threshold.
+```python
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper +60)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7a0196210>
+
+
+
+
+![png](output_12_1.png)
+
+
+
+You can use this data to help you measure around the image. I decided to try something different to make my image better.
+```python
+blurred_img = cv2.blur(img, ksize = (8,8))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc798e28d50>
+
+
+
+
+![png](output_13_1.png)
+
+
+
+This concludes our aspect detection project.
+
+# Feature Detection
+Now we will work with feature detection.
+
+## Feature Matches
+We will begin by looking at feature matches
+
+We have to import our files needed for our work.
+
+```python
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+Download cereal box images, or whatever image you want. Then we code for it to be in grayscale.
+```python
+def display(img, cmap = 'gray'):
+    fig = plt.figure(figsize = (12,10))
+    ax = fig.add_subplot(111)
+    ax.imshow(img, cmap = 'gray')
+```
+
+
+I used cinnamon toast crunch as my cereal cause thats my favorite. We code our cereal and load it to the codes.
+
+```python
+cin_toast = cv2.imread("cinnamon.jpg", 0)
+display(cin_toast)
+```
+
+
+![png](output_2_0.png)
+
+
+We need to download an image of all the cereals. We load this into our code as well.
+```python
+cereals = cv2.imread('cereal.jpg', 0)
+display(cereals)
+```
+
+
+![png](output_3_0.png)
+
+
+
+Now we will begin coding for our feature match projet.
+```python
+orb = cv2.ORB_create()
+
+kp1,des1 = orb.detectAndCompute(cin_toast, mask=None)
+kp2,des2 = orb.detectAndCompute(cereals, mask=None)
+```
+
+
+The name of this method is norm hamming. We also are going to match our key points together in this code.
+```python
+bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck = True)
+matches=bf.match(des1, des2)
+```
+
+
+Now we are going to sort our matches. There will be matches that are not as good, but we want the good matches.
+```python
+matches = sorted(matches, key = lambda x:x.distance)
+```
+
+We can now draw our matches and we want the first ones before 25.
+```python
+cin_toast_matches = cv2.drawMatches(cin_toast, kp1, cereals, kp2, matches[:25], None, flags =2)
+```
+
+Now since we have coded everything, we can display our matches.
+```python
+display(cin_toast_matches)
+```
+
+
+![png](output_8_0.png)
+
+
+This is not the greatest matching. It's matching with other boxes that might seem similar. 
+
+Now we can bein our Sift project.
+```python
+sift = cv2.SIFT_create()
+```
+
+
+```python
+kp1, des1 = sift.detectAndCompute(cin_toast, None)
+kp2, des2 = sift.detectAndCompute(cereals, None)
+```
+
+This set finds the best matches in the images.
+```python
+bf = cv2.BFMatcher()
+matches = bf.knnMatch(des1, des2, k=2)
+```
+
+
+Now we are going to apply a ratio test. If we cluster all the matches together then we have better results.
+```python
+good = []
+# Before alot of the matches were random and close together, this will help us find better quality matches.
+for match1, match2 in matches:
+    if match1.distance < 0.75*match2.distance:
+        good.append([match1])
+```
+
+
+We can know print out the length of our matches. Hopefully we get better matches, maybe even the one we're looking for.
+```python
+print('Length of total matches:', len(matches))
+print('Length of good matches:', len(good))
+```
+
+    Length of total matches: 2285
+    Length of good matches: 37
+
+
+Now lets view our matches to see if we get our box, or at least better matches.
+```python
+sift_matches = cv2.drawMatchesKnn(cin_toast, kp1, cereals, kp2, good, None, flags =2)
+display(sift_matches)
+```
+
+
+![png](output_15_0.png)
+
+
+We do have alot of indecation that matches the box to the one in our chart. We did get better results.
+
+
+Now we will use a faster version of sift.
+```python
+sift = cv2.SIFT_create()
+kp1, des1 = sift.detectAndCompute(cin_toast, None)
+kp2, des2 = sift.detectAndCompute(cereals, None)
+```
+
+Now we will add flan index to our code to run it faster, this doesn't mean that we will get better results.
+```python
+flann_index_KDtree = 0
+index_params = dict(algorithm=flann_index_KDtree, trees = 5)
+search_params = dict(checks=50)
+```
+
+
+Now we can load the matcher after loading the parameters. We're making features and identifying them in both our images.
+
+```python
+flann = cv2.FlannBasedMatcher(index_params, search_params)
+
+matches = flann.knnMatch(des1, des2, k=2)
+
+good = []
+
+for match1, match2, in matches:
+    if match1.distance < 0.75*match2.distance:
+        good.append([match1])
+```
+
+
+Now we can load all the codes and display our images to view the new matches.
+```python
+flann_matches = cv2.drawMatchesKnn(cin_toast, kp1, cereals, kp2, good, None, flags = 0)
+display(flann_matches)
+```
+
+
+![png](output_20_0.png)
+
+
+
+The matches came out better, but we're going to add a mask to it now.
+```python
+sift = cv2.SIFT_create()
+
+kp1, des1 = sift.detectAndCompute(cin_toast, None)
+kp2, des2 = sift.detectAndCompute(cereals, None)
+```
+
+
+```python
+flann_index_KDtree = 0
+index_params = dict(algorithm = flann_index_KDtree, trees = 5)
+search_params = dict(checks = 50)
+```
+
+
+Now we have to combine our codes.
+```python
+flann = cv2.FlannBasedMatcher(index_params, search_params)
+matches = flann.knnMatch(des1, des1, k = 2)
+```
+
+
+Now we can add black to our image matches.
+```python
+matchesMask = [[0,0] for i in range(len(matches))]
+```
+
+Now we can type in our code to get our matches.
+```python
+for i, (match1, match2) in enumerate(matches):
+    if match1.distance <0.75*match2.distance:
+        matchesMask[i] = [1,0]
+        
+draw_params = dict(matchColor = (0,255,0),
+                   singlePointColor = (255,0,0),
+                   matchesMask = matchesMask,
+                   flags = 0)
+```
+
+
+Now we can compute everything together and view our new images to compare the matches.
+```python
+flann_matches = cv2.drawMatchesKnn(cin_toast, kp1, cereals, kp2, matches, None, **draw_params)
+
+display(flann_matches)
+```
+
+
+![png](output_26_0.png)
+
+
+
+Basically what we are seeing now are all the features matching on all the cereal boxes. We changed the line color to be a singular color. This worked out every well. It's alot of matches from my cinnamon toast crunch box to the other boxes. 
+
+
+## Object Detection
+Now we will look at feature detection using object detection.
+
+We begin my downloading the packages needed for this project. We also download images to work with.
+I downloaded a photo of a lilly and a field of lillies for mine.
+
+```python
+import cv2
+```
+
+
+```python
+import numpy as np
+```
+
+
+```python
+import matplotlib.pyplot as plt
+```
+
+
+```python
+%matplotlib inline
+```
+
+
+Code your training photo into the project.
+```python
+full = cv2.imread('Training_Lilly.jpg')
+```
+
+
+We have to change the color.
+```python
+full = cv2.cvtColor(full, cv2.COLOR_BGR2RGB)
+```
+
+Now we can view our image.
+```python
+plt.imshow(full)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fcd30102790>
+
+
+
+
+![png](output_6_1.png)
+
+
+
+Now we want to upload our testing image to the project as well.
+```python
+test = cv2.imread('Lilly_Testing.jpg')
+```
+
+We have to change the color of our test image too.
+```python
+test = cv2.cvtColor(test, cv2.COLOR_BGR2RGB)
+```
+
+
+Now we can view our test image.
+```python
+plt.imshow(test)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fcd227c62d0>
+
+
+
+
+![png](output_9_1.png)
+
+
+
+Now we can view each images shape sizes.
+```python
+print('Test image shape:', full.shape)
+print('Training image shape:', test.shape)
+```
+
+    Test image shape: (800, 640, 3)
+    Training image shape: (427, 640, 3)
+
+
+
+We are saving our variables into the method.
+```python
+methods = ['cv2.TM_CCOEFF', 'cv2.TM_CCOEFF_NORMED','cv2.TM_CCORR', 'cv2.TM_CCORR_NORMED', 'cv2.TM_SQDIFF', 'cv2.TM_SQDIFF_NORMED']
+```
+
+
+Now we're going to try to match the pictures. The code will draw a heat lamp around what matches.
+```python
+for m in methods:
+    test_copy = test.copy()
+    method = eval(m)
+    
+    res = cv2.matchTemplate(test_copy, full, method)
+    
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    
+    # Now we want to draw a picture under what matches.
+    if method in [cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]:
+        top_left = min_loc
+        
+    else:
+        top_left = max_loc
+    # We have just defined that our top left is our min value.
+    
+    height, width, channels = full.shape
+    bottom_right = (top_left[0] + width, top_left[1] + height)
+    # What we have done now is defined the width and height from the top left. We are saying take 
+    # a spot and add this much height and this much width.
+    
+    cv2.rectangle(test_copy, top_left, bottom_right, (255, 0,0), 10)
+    
+    # Now we're going to plot.
+    plt.subplot(121)
+    plt.imshow(res)
+    plt.title("Heatmap of template matching")
+    plt.subplot(122)
+    plt.imshow(test_copy)
+    plt.title('Dectection of template')
+    
+    # Now we're going to add a title for the method being used.
+    plt.suptitle(m)
+    
+    plt.show()
+    print('\n')
+    print('\n')
+```
+
+
+![png](output_12_0.png)
+
+
+    
+    
+    
+    
+
+
+
+![png](output_12_2.png)
+
+
+    
+    
+    
+    
+
+
+
+![png](output_12_4.png)
+
+
+    
+    
+    
+    
+
+
+
+![png](output_12_6.png)
+
+
+    
+    
+    
+    
+
+
+
+![png](output_12_8.png)
+
+
+    
+    
+    
+    
+
+
+
+![png](output_12_10.png)
+
+
+    
+    
+    
+    
+
+
+
+Now we can see how the images align. It takes your imput image and makes it a heatmap and tried to find the same distribution of pictures in the full photo. We've identified in our full image the detection of our test image.
+
+
+
+This concludes our project. I hope you've enjoyed reviewing my work and it was easy to interpret. Thank you.
 
